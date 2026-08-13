@@ -93,21 +93,6 @@ const ReservationContactSection = ({ data, onChange, errors, sectionRef }) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
 
-  const calculateAge = (birthDateStr) => {
-    if (!birthDateStr) return null;
-    const birthDate = new Date(birthDateStr);
-    if (isNaN(birthDate.getTime())) return null;
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    return age >= 0 ? age : null;
-  };
-
-  const computedAge = calculateAge(data.fecha_nacimiento);
-
   const handleDocTypeSelect = (type) => {
     onChange('tipo_documento', type);
     setIsDocTypeOpen(false);
