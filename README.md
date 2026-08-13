@@ -1,350 +1,208 @@
 <div align="center">
 
-# 🏜️ Checua
+# Checua
 
-### Experiencias memorables en el Desierto de Checua
+### Plataforma de reservas para experiencias turísticas en el Desierto de Checua
 
-**Plataforma digital de reservas turísticas diseñada para descubrir, planificar y reservar experiencias de forma sencilla, segura y cercana.**
+Aplicación web moderna para consultar planes, registrar participantes y completar reservas de experiencias ofrecidas por **Adrenaline Colombia**.
 
-[![Estado](https://img.shields.io/badge/estado-en%20desarrollo-D9A441?style=for-the-badge)](#estado-del-proyecto)
-[![Idiomas](https://img.shields.io/badge/idiomas-ES%20%7C%20EN-2F6B4F?style=for-the-badge)](#experiencia-bilingüe)
-[![Supabase](https://img.shields.io/badge/backend-Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)](#arquitectura)
-[![Licencia](https://img.shields.io/badge/licencia-privada-6B4F3A?style=for-the-badge)](#licencia)
-
-[Características](#características-principales) ·
-[Flujo de reserva](#flujo-de-reserva) ·
-[Instalación](#instalación-local) ·
-[Configuración](#variables-de-entorno) ·
-[Contribución](#contribución)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
+[![Supabase](https://img.shields.io/badge/Supabase-2-3FCF8E?logo=supabase&logoColor=white)](https://supabase.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Vercel](https://img.shields.io/badge/Deploy-Vercel-000000?logo=vercel)](https://vercel.com/)
 
 </div>
 
 ---
 
-## Sobre Checua
+## Descripción
 
-**Checua** es una plataforma web enfocada en la promoción y reserva de experiencias turísticas en el Desierto de Checua, Colombia. Su propósito es conectar a los visitantes con actividades auténticas del territorio mediante un proceso de reserva claro, intuitivo y adaptado a dispositivos móviles.
+**Checua** centraliza el proceso de reserva de actividades turísticas en el Desierto de Checua. Su flujo guiado permite seleccionar una experiencia, consultar fechas y horarios disponibles, registrar al responsable y sus acompañantes, revisar el valor estimado y acceder a las instrucciones de pago.
 
-La aplicación reúne en un solo lugar la selección de experiencias, fechas, horarios, acompañantes, resumen de compra, pago y contacto por WhatsApp. Además, incorpora una experiencia bilingüe para atender tanto a visitantes nacionales como internacionales.
+La aplicación utiliza **Supabase** para consultar y almacenar la información operativa, ofrece una experiencia bilingüe y está preparada para desplegarse como una aplicación de página única (SPA) en **Vercel**.
 
-> Más que una reserva, Checua busca ser el inicio de una experiencia inolvidable.
+## Funcionalidades
 
-## Características principales
+- Consulta dinámica de experiencias y precios.
+- Selección de fechas según la disponibilidad de cada plan.
+- Horarios variables y asignación automática de horarios fijos.
+- Registro y validación de los datos del responsable.
+- Gestión de acompañantes y participantes.
+- Validación internacional de números telefónicos.
+- Cálculo del valor total estimado.
+- Resumen completo antes de continuar con el pago.
+- Información de abono y medios de pago.
+- Envío del comprobante mediante WhatsApp.
+- Interfaz en español e inglés.
+- Temas claro y oscuro.
+- Diseño adaptable para móviles y computadores.
+- Persistencia de clientes, participantes, planes y reservas con Supabase.
 
-### Descubrimiento de experiencias
+## Tecnologías
 
-- Catálogo visual de actividades y planes turísticos.
-- Información clara sobre cada experiencia.
-- Selección guiada para reducir dudas durante la reserva.
-- Diseño enfocado en transmitir la identidad natural y cultural de Checua.
+| Tecnología | Propósito |
+| --- | --- |
+| [React 19](https://react.dev/) | Interfaz de usuario |
+| [Vite 8](https://vite.dev/) | Desarrollo y compilación |
+| [Supabase](https://supabase.com/) | Base de datos y servicios |
+| [React Router](https://reactrouter.com/) | Navegación |
+| [i18next](https://www.i18next.com/) | Internacionalización |
+| [Tailwind CSS](https://tailwindcss.com/) | Utilidades de estilos |
+| [libphonenumber-js](https://github.com/catamphetamine/libphonenumber-js) | Validación telefónica |
+| [ESLint](https://eslint.org/) | Calidad del código |
+| [Vercel](https://vercel.com/) | Despliegue |
 
-### Reservas paso a paso
+## Requisitos
 
-- Selección de experiencia.
-- Elección de fecha disponible.
-- Selección de horario.
-- Registro del número de acompañantes.
-- Resumen completo antes de confirmar.
-- Validación de datos durante cada etapa del proceso.
-
-### Gestión de acompañantes
-
-- Registro de la información necesaria de los participantes.
-- Organización de grupos dentro de una misma reserva.
-- Confirmación del número total de viajeros.
-- Datos preparados para facilitar la atención operativa.
-
-### Pagos y confirmación
-
-- Preparación del resumen de compra.
-- Flujo de pago integrado con la reserva.
-- Confirmación clara del estado del proceso.
-- Información centralizada para evitar errores o reservas incompletas.
-
-### Integración con WhatsApp
-
-- Canal de contacto directo con el equipo.
-- Apoyo personalizado antes o después de reservar.
-- Continuidad rápida entre la experiencia web y la atención humana.
-- Opción práctica para resolver preguntas específicas del visitante.
-
-### Experiencia bilingüe
-
-La interfaz está preparada para ofrecer contenido en:
-
-- 🇨🇴 Español
-- 🇺🇸 Inglés
-
-Esto permite ampliar el alcance de las experiencias y brindar una navegación más cómoda a viajeros internacionales.
-
-### Diseño adaptable
-
-- Experiencia optimizada para celulares, tabletas y computadores.
-- Interfaz limpia y orientada a la conversión.
-- Navegación progresiva y fácil de comprender.
-- Componentes visuales consistentes.
-- Prioridad en legibilidad, accesibilidad y rapidez.
-
-## Flujo de reserva
-
-```mermaid
-flowchart LR
-    A[Elegir experiencia] --> B[Seleccionar fecha]
-    B --> C[Elegir horario]
-    C --> D[Registrar viajeros]
-    D --> E[Revisar reserva]
-    E --> F[Realizar pago]
-    F --> G[Recibir confirmación]
-```
-
-Cada paso conserva el contexto de la reserva para que el visitante pueda avanzar con confianza y revisar la información antes de confirmar.
-
-## Arquitectura
-
-Checua está planteado como una aplicación web moderna con separación entre la experiencia de usuario, la lógica de reservas y la persistencia de datos.
-
-```mermaid
-flowchart TB
-    UI[Interfaz web] --> FORM[Formulario de reserva]
-    FORM --> LOGIC[Lógica y validaciones]
-    LOGIC --> DB[(Supabase)]
-    LOGIC --> PAY[Proceso de pago]
-    LOGIC --> WA[WhatsApp]
-```
-
-### Componentes funcionales
-
-| Componente | Responsabilidad |
-|---|---|
-| Interfaz web | Presentación de experiencias y navegación |
-| Formulario de reserva | Captura progresiva de la información |
-| Validaciones | Control de fechas, horarios y datos requeridos |
-| Supabase | Persistencia y consulta de información |
-| Pagos | Confirmación económica de la reserva |
-| WhatsApp | Atención y comunicación directa |
-| Internacionalización | Gestión de contenidos en español e inglés |
-
-## Tecnología
-
-La solución utiliza herramientas modernas para mantener una experiencia rápida, escalable y fácil de evolucionar:
-
-- **Frontend web moderno** basado en componentes reutilizables.
-- **Supabase** para servicios de backend y almacenamiento de datos.
-- **Variables de entorno** para proteger configuraciones sensibles.
-- **Diseño responsive** para diferentes tamaños de pantalla.
-- **Internacionalización** para contenido bilingüe.
-- **Integraciones externas** para pagos y comunicación.
-
-> Las tecnologías y versiones exactas deben consultarse en los archivos de configuración del proyecto.
+- [Node.js](https://nodejs.org/) 20 o superior.
+- npm 10 o superior.
+- Un proyecto de Supabase configurado para la aplicación.
 
 ## Instalación local
 
-### Requisitos previos
-
-Antes de comenzar, instala:
-
-- [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/) en una versión LTS
-- npm, incluido con Node.js
-- Un proyecto de [Supabase](https://supabase.com/)
-
-### 1. Clonar el repositorio
+1. Clona el repositorio:
 
 ```bash
 git clone https://github.com/Eduar-Construcciones-S-A-S/Checua.git
-cd Checua
+cd Checua/Checua-main
 ```
 
-### 2. Instalar dependencias
+2. Instala las dependencias:
 
 ```bash
 npm install
 ```
 
-### 3. Configurar el entorno
+3. Crea `.env.local` en la carpeta `Checua-main`:
 
-Crea un archivo `.env.local` a partir del archivo de ejemplo cuando este se encuentre disponible:
-
-```bash
-cp .env.example .env.local
+```env
+VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
+VITE_SUPABASE_ANON_KEY=tu-clave-anonima
 ```
 
-Completa las variables requeridas para Supabase y las integraciones habilitadas.
-
-### 4. Iniciar el entorno de desarrollo
+4. Inicia el entorno de desarrollo:
 
 ```bash
 npm run dev
 ```
 
-Abre la dirección local indicada en la terminal, normalmente:
+5. Abre la dirección indicada por Vite, normalmente `http://localhost:5173`.
+
+> [!IMPORTANT]
+> Las variables `VITE_` son visibles desde el navegador. Utiliza solamente la clave pública `anon` de Supabase. Nunca incluyas una clave `service_role` en el frontend ni en el repositorio.
+
+## Scripts
+
+| Comando | Descripción |
+| --- | --- |
+| `npm run dev` | Inicia el servidor local con recarga automática |
+| `npm run build` | Genera la versión optimizada en `dist/` |
+| `npm run preview` | Previsualiza la compilación de producción |
+| `npm run lint` | Analiza el código con ESLint |
+
+## Estructura
 
 ```text
-http://localhost:3000
-```
-
-## Variables de entorno
-
-Las credenciales deben mantenerse fuera del repositorio. Una configuración típica puede incluir:
-
-```env
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-
-# Integraciones
-NEXT_PUBLIC_WHATSAPP_NUMBER=
-PAYMENT_PROVIDER_PUBLIC_KEY=
-PAYMENT_PROVIDER_SECRET_KEY=
-```
-
-> Los nombres definitivos dependen de la implementación. Nunca publiques claves privadas, tokens o credenciales reales en GitHub.
-
-## Estructura recomendada
-
-```text
-Checua/
-├── public/              # Recursos estáticos
+Checua-main/
+├── public/                 # Iconos y archivos públicos
 ├── src/
-│   ├── components/      # Componentes reutilizables
-│   ├── pages/           # Páginas o rutas
-│   ├── features/        # Módulos funcionales
-│   ├── services/        # Supabase e integraciones
-│   ├── hooks/           # Lógica reutilizable
-│   ├── i18n/            # Traducciones
-│   ├── styles/          # Estilos globales
-│   └── utils/           # Utilidades y validaciones
-├── .env.example         # Variables documentadas
+│   ├── assets/             # Recursos visuales
+│   ├── components/         # Formularios, selectores y modales
+│   ├── config/             # Configuración de pagos
+│   ├── lib/                # Cliente de Supabase
+│   ├── locales/            # Traducciones en español e inglés
+│   ├── pages/              # Páginas de la aplicación
+│   ├── services/           # Acceso a datos y persistencia
+│   ├── utils/              # Utilidades y catálogos
+│   ├── App.jsx             # Estado y flujo principal
+│   ├── i18n.js             # Configuración de idiomas
+│   └── main.jsx            # Punto de entrada
+├── index.html
 ├── package.json
-└── README.md
+├── vercel.json
+└── vite.config.js
 ```
 
-La estructura real del proyecto puede variar según el framework y su evolución.
+## Flujo de reserva
 
-## Modelo funcional de la reserva
+1. El visitante proporciona su teléfono y acepta la política de tratamiento de datos.
+2. Selecciona una experiencia disponible.
+3. Registra los datos del responsable.
+4. Escoge una fecha y un horario válidos para el plan.
+5. Añade acompañantes cuando corresponde.
+6. Revisa el resumen y el valor estimado.
+7. Consulta las instrucciones de pago.
+8. Envía el comprobante por WhatsApp para validar la reserva.
 
-Una reserva reúne, como mínimo, la siguiente información:
+## Configuración de pagos
 
-| Categoría | Información |
-|---|---|
-| Experiencia | Actividad o plan seleccionado |
-| Programación | Fecha y horario |
-| Visitantes | Titular y acompañantes |
-| Contacto | Datos necesarios para la confirmación |
-| Pago | Valor y estado de la transacción |
-| Seguimiento | Estado general de la reserva |
+Los medios de pago, el beneficiario y el número oficial de WhatsApp se administran en:
 
-## Seguridad y buenas prácticas
+```text
+src/config/paymentConfig.js
+```
 
-- No almacenar secretos directamente en el código.
-- Validar la información tanto en el cliente como en el servidor.
-- Aplicar políticas de acceso en Supabase.
-- Limitar los permisos de cada integración.
-- Sanitizar los datos ingresados por los usuarios.
-- Proteger las operaciones relacionadas con pagos.
-- Mantener dependencias actualizadas.
-- Evitar registrar información sensible en consola.
-- Utilizar HTTPS en ambientes públicos.
+> [!WARNING]
+> Antes de publicar la aplicación, reemplaza todos los valores marcados como `PLACEHOLDER` por información verificada. No almacenes credenciales privadas ni secretos bancarios en el código.
 
-## Accesibilidad y experiencia de usuario
+## Internacionalización
 
-Checua busca que el proceso de reserva pueda ser utilizado por la mayor cantidad de personas posible. Para ello se recomienda:
+Los textos se encuentran en:
 
-- Mantener contraste suficiente entre texto y fondo.
-- Incluir etiquetas claras en todos los campos.
-- Permitir navegación mediante teclado.
-- Mostrar mensajes de error comprensibles.
-- Evitar depender únicamente del color para comunicar estados.
-- Optimizar imágenes sin perder calidad visual.
-- Respetar las preferencias de movimiento reducido.
+```text
+src/locales/es/translation.json
+src/locales/en/translation.json
+```
 
-## Calidad
+Para agregar un idioma, crea el archivo de traducción correspondiente y regístralo en `src/i18n.js`.
 
-Antes de publicar cambios se recomienda ejecutar las verificaciones disponibles en el proyecto:
+## Verificación
+
+Antes de integrar o desplegar cambios, ejecuta:
 
 ```bash
 npm run lint
 npm run build
 ```
 
-Si existen pruebas automatizadas:
+Ambos comandos deben finalizar correctamente.
 
-```bash
-npm test
-```
+## Despliegue en Vercel
 
-Todo cambio debe conservar el funcionamiento del flujo completo de reserva en vista móvil y de escritorio.
+1. Importa el repositorio en Vercel.
+2. Establece `Checua-main` como directorio raíz del proyecto.
+3. Configura `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`.
+4. Usa `npm run build` como comando de compilación.
+5. Usa `dist` como directorio de salida.
+6. Inicia el despliegue.
 
-## Despliegue
-
-Para desplegar la aplicación:
-
-1. Configura las variables de entorno en la plataforma de alojamiento.
-2. Conecta el repositorio con el proveedor de despliegue.
-3. Verifica que Supabase acepte el dominio de producción.
-4. Configura las credenciales de pagos y WhatsApp para el entorno correspondiente.
-5. Ejecuta una reserva de prueba de principio a fin.
-6. Comprueba la experiencia en español e inglés.
-
-## Estado del proyecto
-
-🚧 **En desarrollo activo**
-
-Las funcionalidades, integraciones y decisiones técnicas pueden cambiar conforme avance el producto. Consulta el historial de commits y las ramas activas para conocer el estado más reciente.
-
-## Hoja de ruta
-
-- [x] Flujo guiado de reservas
-- [x] Selección de experiencias
-- [x] Fechas, horarios y acompañantes
-- [x] Resumen de la reserva
-- [x] Interfaz bilingüe
-- [x] Integración con Supabase
-- [x] Contacto mediante WhatsApp
-- [ ] Fortalecer pruebas automatizadas
-- [ ] Mejorar analítica y seguimiento de conversiones
-- [ ] Ampliar herramientas de administración
-- [ ] Optimizar accesibilidad y rendimiento
-- [ ] Incorporar nuevas experiencias y paquetes
+El archivo `vercel.json` contiene la regla necesaria para resolver correctamente las rutas de la SPA.
 
 ## Contribución
 
-Este repositorio corresponde a un proyecto gestionado por **Eduar Construcciones S.A.S.** Si formas parte del equipo y deseas contribuir:
-
 1. Crea una rama desde `main`.
-2. Utiliza un nombre descriptivo, por ejemplo `feature/nueva-experiencia`.
-3. Realiza cambios pequeños y enfocados.
-4. Verifica lint, compilación y pruebas.
-5. Escribe commits claros.
-6. Abre un Pull Request explicando el objetivo y las pruebas realizadas.
-7. Solicita revisión antes de integrar los cambios.
+2. Implementa cambios pequeños y claramente documentados.
+3. Ejecuta el lint y la compilación.
+4. Usa mensajes de commit descriptivos.
+5. Abre un pull request explicando el propósito del cambio.
 
-### Convención sugerida de commits
-
-```text
-feat: agrega una nueva funcionalidad
-fix: corrige un comportamiento
-docs: actualiza documentación
-style: ajusta presentación sin cambiar lógica
-refactor: reorganiza código
-test: agrega o modifica pruebas
-chore: realiza tareas de mantenimiento
+```bash
+git checkout -b feat/nueva-funcionalidad
+git commit -m "feat: agrega nueva funcionalidad"
+git push origin feat/nueva-funcionalidad
 ```
 
-## Licencia
+## Mantenimiento
 
-Este proyecto es de uso privado y todos los derechos están reservados. No se autoriza su copia, distribución, modificación ni uso comercial sin permiso expreso del propietario.
+Proyecto mantenido por **Eduar Construcciones S.A.S.**
+
+Repositorio: [Eduar-Construcciones-S-A-S/Checua](https://github.com/Eduar-Construcciones-S-A-S/Checua)
 
 ---
 
 <div align="center">
 
-### 🏜️ Checua
-
-**Naturaleza, aventura y experiencias que dejan huella.**
-
-Proyecto realizado por **Brayan Forigua**.
-
-Desarrollado con dedicación en Colombia 🇨🇴
+**Checua — experiencias memorables, reservas sencillas.**
 
 </div>
