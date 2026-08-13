@@ -4,6 +4,7 @@ import PhoneInputPkg from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { COUNTRIES, findCountry, getCountryName } from '../utils/countries';
 import { CountryFlagImg } from '../utils/CountryFlagImg.jsx';
+import BirthDateField from './BirthDateField';
 
 const PhoneInput = PhoneInputPkg.default || PhoneInputPkg;
 
@@ -203,43 +204,17 @@ const ReservationContactSection = ({ data, onChange, errors, sectionRef }) => {
               </div>
             </div>
 
-            {/* Fecha de Nacimiento + Edad calculada */}
+{/* Fecha de Nacimiento + Edad calculada */}
             <div className="relative group">
-              <label className="text-[8px] sm:text-[9px] font-black text-brand-primary uppercase tracking-widest mb-1.5 block opacity-70 ml-6">
-                {t('sections.birth_date')}
-              </label>
-              <div className="relative">
-                <input
-                  type="date"
-                  name="fecha_nacimiento"
-                  value={data.fecha_nacimiento}
-                  onChange={handleChange}
-                  max={new Date().toISOString().split('T')[0]}
-                  className={`input-premium !py-3.5 sm:!py-4 pr-28 sm:pr-36 ${errors.fecha_nacimiento ? 'border-red-200 focus:border-red-400 focus:ring-red-400/5' : ''}`}
-                />
-                <div className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                  {computedAge !== null ? (
-                    <div className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-brand-primary/10 to-brand-primary/20 border border-brand-primary/30 animate-in fade-in zoom-in duration-300">
-                      <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      <span className="text-[10px] sm:text-xs font-black text-brand-primary uppercase tracking-wider">
-                        {computedAge} {t('sections.age_suffix')}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-brand-light/40 dark:bg-dark-bg-main/40 border border-brand-border/50 dark:border-dark-border/50">
-                      <span className="text-[10px] sm:text-xs font-bold text-brand-text-secondary/40 dark:text-dark-text-secondary/40 uppercase tracking-wider">
-                        -- {t('sections.age_suffix')}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <BirthDateField
+                value={data.fecha_nacimiento}
+                onChange={(value) => onChange('fecha_nacimiento', value)}
+                hasError={Boolean(errors.fecha_nacimiento)}
+              />
               {errors.fecha_nacimiento && <p className="text-[10px] text-red-500 mt-1.5 ml-6 font-bold uppercase tracking-wider">{errors.fecha_nacimiento}</p>}
             </div>
 
-            {/* Nacionalidad con selector de banderas */}
+                        {/* Nacionalidad con selector de banderas */}
             <div className="relative group" ref={nationalityDropdownRef}>
               <label className="text-[8px] sm:text-[9px] font-black text-brand-primary uppercase tracking-widest mb-1.5 block opacity-70 ml-6">
                 {t('sections.nationality')}
