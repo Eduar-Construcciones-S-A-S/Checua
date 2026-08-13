@@ -624,6 +624,72 @@ const HomePage = ({
                   </div>
                 </div>
 
+              {/* Lista de Acompañantes en el Resumen */}
+              {reservationData.companions.length > 0 && (
+                <div className="space-y-4 pt-4 border-t border-brand-light dark:border-dark-border">
+                  <p className="section-title-premium !ml-0">
+                    {t('summary.registered_companions')} ({reservationData.companions.length})
+                  </p>
+                  <div className="grid gap-4">
+                    {reservationData.companions.map((comp, idx) => (
+                      <div key={idx} className="bg-brand-light/30 dark:bg-dark-bg-main/30 rounded-[1.5rem] p-6 border border-brand-primary/10 group hover:border-brand-primary/30 transition-all">
+                        <div className="flex items-start gap-4">
+                          <div className="w-10 h-10 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-black text-sm shrink-0">
+                            {idx + 1}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex justify-between items-start mb-2">
+                              <p className="text-brand-text-main dark:text-dark-text-main font-black text-base uppercase truncate pr-2">{comp.nombre}</p>
+                            </div>
+                            
+                            <div className="grid sm:grid-cols-2 gap-y-2 gap-x-4">
+                              <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-start gap-2 min-w-0">
+                                <span className="w-1 h-1 bg-brand-primary/40 rounded-full mt-1.5 shrink-0"></span>
+                                <span className="font-bold shrink-0">{comp.tipo_documento}:</span>
+                                <span className="min-w-0 break-all">{comp.numero_documento}</span>
+                              </p>
+                              <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-start gap-2 min-w-0">
+                                <span className="w-1 h-1 bg-brand-primary/40 rounded-full mt-1.5 shrink-0"></span>
+                                <span className="font-bold shrink-0">Tel:</span>
+                                <span className="min-w-0 break-all">{comp.telefono}</span>
+                              </p>
+                              <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-start gap-2 sm:col-span-2 min-w-0">
+                                <span className="w-1 h-1 bg-brand-primary/40 rounded-full mt-1.5 shrink-0"></span>
+                                <span className="font-bold shrink-0">Email:</span>
+                                <span className="min-w-0 break-all">{comp.correo || '---'}</span>
+                              </p>
+                            </div>
+
+                            <div className="flex gap-3 sm:gap-4 pt-3 mt-3 border-t border-brand-primary/5 flex-wrap">
+                              {calculateAge(comp.fecha_nacimiento) !== null && (
+                                <p className="text-brand-text-secondary dark:text-dark-text-secondary text-[10px] flex items-center gap-1">
+                                  <span className="w-1 h-1 rounded-full bg-brand-primary/30 shrink-0"></span>
+                                  <span className="font-black text-brand-primary/50 mr-1 uppercase">{t('sections.age')}:</span>
+                                  <span className="font-black text-brand-dark/80 dark:text-brand-primary/90">
+                                    {calculateAge(comp.fecha_nacimiento)} {t('sections.age_suffix')}
+                                  </span>
+                                </p>
+                              )}
+                              {comp.nacionalidad && (
+                                <p className="text-brand-text-secondary dark:text-dark-text-secondary text-[10px] flex items-center gap-1">
+                                  <span className="w-1 h-1 rounded-full bg-brand-primary/30 shrink-0"></span>
+                                  <span className="font-black text-brand-primary/50 mr-1 uppercase">{t('sections.nationality')}:</span>
+                                  <CountryFlagImg value={comp.nacionalidad} size="w40" alt="" className="!w-4 !h-4 rounded-full" />
+                                  <span className="font-black text-brand-dark/80 dark:text-brand-primary/90 ml-1">
+                                    {getCountryName(comp.nacionalidad)}
+                                  </span>
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+
                 {/* Detalles de la Experiencia y Fecha */}
                 <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
                   <div className="space-y-4">
@@ -775,71 +841,6 @@ const HomePage = ({
                   {t('steps.edit_participants') || t('summary.add_companions')}
                 </button>
               </div>
-
-              {/* Lista de Acompañantes en el Resumen */}
-              {reservationData.companions.length > 0 && (
-                <div className="space-y-4 pt-4 border-t border-brand-light dark:border-dark-border">
-                  <p className="section-title-premium !ml-0">
-                    {t('summary.registered_companions')} ({reservationData.companions.length})
-                  </p>
-                  <div className="grid gap-4">
-                    {reservationData.companions.map((comp, idx) => (
-                      <div key={idx} className="bg-brand-light/30 dark:bg-dark-bg-main/30 rounded-[1.5rem] p-6 border border-brand-primary/10 group hover:border-brand-primary/30 transition-all">
-                        <div className="flex items-start gap-4">
-                          <div className="w-10 h-10 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-black text-sm shrink-0">
-                            {idx + 1}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex justify-between items-start mb-2">
-                              <p className="text-brand-text-main dark:text-dark-text-main font-black text-base uppercase truncate pr-2">{comp.nombre}</p>
-                            </div>
-                            
-                            <div className="grid sm:grid-cols-2 gap-y-2 gap-x-4">
-                              <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-start gap-2 min-w-0">
-                                <span className="w-1 h-1 bg-brand-primary/40 rounded-full mt-1.5 shrink-0"></span>
-                                <span className="font-bold shrink-0">{comp.tipo_documento}:</span>
-                                <span className="min-w-0 break-all">{comp.numero_documento}</span>
-                              </p>
-                              <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-start gap-2 min-w-0">
-                                <span className="w-1 h-1 bg-brand-primary/40 rounded-full mt-1.5 shrink-0"></span>
-                                <span className="font-bold shrink-0">Tel:</span>
-                                <span className="min-w-0 break-all">{comp.telefono}</span>
-                              </p>
-                              <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-start gap-2 sm:col-span-2 min-w-0">
-                                <span className="w-1 h-1 bg-brand-primary/40 rounded-full mt-1.5 shrink-0"></span>
-                                <span className="font-bold shrink-0">Email:</span>
-                                <span className="min-w-0 break-all">{comp.correo || '---'}</span>
-                              </p>
-                            </div>
-
-                            <div className="flex gap-3 sm:gap-4 pt-3 mt-3 border-t border-brand-primary/5 flex-wrap">
-                              {calculateAge(comp.fecha_nacimiento) !== null && (
-                                <p className="text-brand-text-secondary dark:text-dark-text-secondary text-[10px] flex items-center gap-1">
-                                  <span className="w-1 h-1 rounded-full bg-brand-primary/30 shrink-0"></span>
-                                  <span className="font-black text-brand-primary/50 mr-1 uppercase">{t('sections.age')}:</span>
-                                  <span className="font-black text-brand-dark/80 dark:text-brand-primary/90">
-                                    {calculateAge(comp.fecha_nacimiento)} {t('sections.age_suffix')}
-                                  </span>
-                                </p>
-                              )}
-                              {comp.nacionalidad && (
-                                <p className="text-brand-text-secondary dark:text-dark-text-secondary text-[10px] flex items-center gap-1">
-                                  <span className="w-1 h-1 rounded-full bg-brand-primary/30 shrink-0"></span>
-                                  <span className="font-black text-brand-primary/50 mr-1 uppercase">{t('sections.nationality')}:</span>
-                                  <CountryFlagImg value={comp.nacionalidad} size="w40" alt="" className="!w-4 !h-4 rounded-full" />
-                                  <span className="font-black text-brand-dark/80 dark:text-brand-primary/90 ml-1">
-                                    {getCountryName(comp.nacionalidad)}
-                                  </span>
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
 
               <div className="pt-4 text-center">
                 <p className="text-[11px] text-brand-text-secondary/40 dark:text-dark-text-secondary/40 font-bold uppercase tracking-[0.2em] italic">
