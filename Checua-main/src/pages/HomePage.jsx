@@ -643,7 +643,7 @@ const HomePage = ({
                               <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-start gap-2 min-w-0">
                                 <span className="w-1 h-1 bg-brand-primary/40 rounded-full mt-1.5 shrink-0"></span>
                                 <span className="font-bold shrink-0">{comp.tipo_documento}:</span>
-                                <span className="min-w-0 break-all">{comp.numero_documento}</span>
+                                <span className="min-w-0 sm:whitespace-nowrap">{comp.numero_documento}</span>
                               </p>
                               <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-start gap-2 min-w-0">
                                 <span className="w-1 h-1 bg-brand-primary/40 rounded-full mt-1.5 shrink-0"></span>
