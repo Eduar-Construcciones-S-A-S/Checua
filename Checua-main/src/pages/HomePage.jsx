@@ -200,7 +200,7 @@ const HomePage = ({
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-white to-brand-light/40 dark:from-dark-bg-main dark:to-dark-bg-main py-8 px-4 sm:px-6 lg:px-8 flex flex-col items-center transition-colors duration-300 ${isModalOpen ? 'overflow-hidden h-screen' : ''}`}>
+    <div className={`min-h-screen bg-gradient-to-b from-white to-brand-light/40 dark:from-dark-bg-main dark:to-dark-bg-main py-3 sm:py-8 px-4 sm:px-6 lg:px-8 flex flex-col items-center transition-colors duration-300 ${isModalOpen ? 'overflow-hidden h-screen' : ''}`}>
       {isModalOpen ? (
         <WelcomeModal 
           isOpen={isModalOpen} 
@@ -219,9 +219,9 @@ const HomePage = ({
       {!isModalOpen && (
         <>
           {/* Header Titles */}
-          <div className="w-full max-w-xl text-center mb-10 pt-16 md:pt-20 relative">
+          <div className="w-full max-w-xl text-center mb-6 sm:mb-10 pt-2 sm:pt-16 md:pt-20 relative">
         {/* Theme & Language Selectors */}
-        <div className="flex items-center justify-center gap-3 flex-wrap sm:absolute sm:top-0 sm:right-0">
+        <div className="flex items-center justify-center gap-3 flex-wrap mb-4 sm:mb-0 sm:absolute sm:top-0 sm:right-0">
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
@@ -302,7 +302,7 @@ const HomePage = ({
         )}
 
         {/* INDICADOR DE PASOS */}
-        <div className="mb-8 md:mb-12 px-2">
+        <div className="mb-5 sm:mb-8 md:mb-12 px-2">
           <div className="max-w-3xl mx-auto relative">
             <div className="flex items-center justify-between z-10 relative">
               {[
