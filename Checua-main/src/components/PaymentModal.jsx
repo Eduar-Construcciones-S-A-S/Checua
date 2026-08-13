@@ -8,6 +8,8 @@ const PaymentModal = ({ isOpen, onClose, experience, participants, totalAmount, 
 
   if (!isOpen) return null;
 
+  const depositAmount = Math.round(totalAmount * 0.3);
+
   const handleCopy = (text, field) => {
     navigator.clipboard.writeText(text);
     setCopiedField(field);
@@ -50,18 +52,34 @@ const PaymentModal = ({ isOpen, onClose, experience, participants, totalAmount, 
             <p className="text-brand-text-main dark:text-dark-text-main font-black text-base md:text-lg leading-tight break-words whitespace-normal">
               {experience}
             </p>
-            <div className="flex justify-between items-end pt-2 border-t border-brand-primary/10">
-              <div>
-                <p className="text-[10px] font-bold text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-widest">
-                  {t('summary.payment.participants')}: <span className="text-brand-text-main dark:text-dark-text-main">{participants}</span>
-                </p>
+            <div className="pt-3 border-t border-brand-primary/10 space-y-3">
+              <p className="text-[10px] font-bold text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-widest">
+                {t('summary.payment.participants')}: <span className="text-brand-text-main dark:text-dark-text-main">{participants}</span>
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="rounded-2xl border border-brand-primary/15 bg-white/50 dark:bg-dark-bg-card/40 p-4">
+                  <p className="text-[9px] font-black text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-wider">
+                    Valor total de la reserva
+                  </p>
+                  <p className="mt-1 text-lg md:text-xl font-black text-brand-text-main dark:text-dark-text-main whitespace-nowrap">
+                    ${formatCurrency(totalAmount)} COP
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border-2 border-brand-primary/40 bg-brand-primary/10 p-4 shadow-[0_10px_25px_-18px_rgba(140,201,21,0.9)]">
+                  <p className="text-[9px] font-black text-brand-primary uppercase tracking-wider">
+                    Abono para confirmar (30 %)
+                  </p>
+                  <p className="mt-1 text-xl md:text-2xl font-black text-brand-primary whitespace-nowrap">
+                    ${formatCurrency(depositAmount)} COP
+                  </p>
+                </div>
               </div>
-              <div className="text-right">
-                <p className="text-xl md:text-2xl font-black text-brand-primary leading-none">
-                  ${formatCurrency(totalAmount)}
-                </p>
-                <span className="text-[9px] font-black text-brand-primary/40 uppercase tracking-widest">COP</span>
-              </div>
+
+              <p className="text-[10px] font-bold text-brand-text-secondary dark:text-dark-text-secondary text-center">
+                Paga el abono mínimo para confirmar tu cupo.
+              </p>
             </div>
           </div>
 
