@@ -15,7 +15,7 @@ export const PAYMENT_CONFIG = {
     logo: PAYMENT_ASSETS.breb
   },
   beneficiary: {
-    name: "Adrenaline Colombia"
+    name: "Desierto de Checua"
   },
   whatsapp: {
     official_number: "573015119344",
