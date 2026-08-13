@@ -30,7 +30,7 @@
   "home": {
     "title": "Formulario de Reservas",
     "subtitle": "Desierto de Checua",
-    "experience_adrenaline": "Experiencia Adrenaline Colombia"
+    "experience_adrenaline": "Desierto de Checua"
   },
   "sections": {
     "contact": "Información de contacto",
@@ -155,7 +155,7 @@
       "copy_key": "Copiar llave",
       "copied": "¡Copiado!",
       "beneficiary_label": "Beneficiario",
-      "beneficiary_name": "Adrenaline Colombia",
+      "beneficiary_name": "Desierto de Checua",
       "beneficiary_hint": "El nombre que debe aparecer al realizar la transacción es:",
       "whatsapp_instruction": "Una vez realizado el pago, por favor envía el comprobante o captura de pantalla al chat de WhatsApp para validar tu reserva.",
       "send_whatsapp": "Enviar comprobante por WhatsApp",
