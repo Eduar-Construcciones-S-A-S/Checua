@@ -732,13 +732,16 @@ const HomePage = ({
                         <p className="text-[10px] font-black text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-widest">
                           RESUMEN DEL PAGO
                         </p>
-                        <div className="flex items-center justify-between gap-4">
-                          <span className="text-[10px] sm:text-xs font-bold text-brand-text-secondary dark:text-dark-text-secondary uppercase">
-                            Valor total de la reserva
-                          </span>
-                          <span className="text-sm font-black text-brand-text-main dark:text-dark-text-main whitespace-nowrap">
+                        <div className="rounded-[1.25rem] border-2 border-brand-primary/25 bg-brand-primary/5 px-4 py-4 text-center">
+                          <p className="text-[10px] sm:text-xs font-black text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-[0.14em]">
+                            Valor total del plan
+                          </p>
+                          <p className="mt-1 text-2xl sm:text-3xl font-black text-brand-text-main dark:text-dark-text-main leading-none">
                             {formatCOP(totalPrice)}
-                          </span>
+                          </p>
+                          <p className="mt-2 text-[9px] sm:text-[10px] font-bold text-brand-primary uppercase tracking-wider">
+                            Para {totalParticipants} persona(s): responsable y acompañantes
+                          </p>
                         </div>
                         <div className="h-px bg-brand-primary/10"></div>
                         <div className="flex items-center justify-between gap-4">
@@ -812,12 +815,6 @@ const HomePage = ({
               <div className="pt-4 text-center">
                 <p className="text-[11px] text-brand-text-secondary/40 dark:text-dark-text-secondary/40 font-bold uppercase tracking-[0.2em] italic">
                   {t('summary.verify_data_hint')}
-                </p>
-              </div>
-
-              <div className="pt-6 text-center">
-                <p className="text-sm text-brand-text-main dark:text-dark-text-main font-black">
-                  Deseas proceder con la reserva o tienes alguna duda?
                 </p>
               </div>
 
