@@ -579,47 +579,44 @@ const HomePage = ({
                     <p className="text-brand-text-main dark:text-dark-text-main font-black text-lg md:text-xl mb-3 break-words whitespace-normal">
                       {reservationData.contact.nombre_jefe_reserva}
                     </p>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <p className="text-brand-text-secondary dark:text-dark-text-secondary text-sm flex items-start gap-2 min-w-0">
-                          <span className="w-1.5 h-1.5 bg-brand-primary rounded-full mt-2 shrink-0"></span>
-                          <span className="font-bold shrink-0">{reservationData.contact.tipo_documento}:</span>
-                          <span className="min-w-0 break-all">{reservationData.contact.numero_documento}</span>
+                    <div className="grid sm:grid-cols-2 gap-y-2 gap-x-4">
+                      <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-start gap-2 min-w-0">
+                        <span className="w-1 h-1 bg-brand-primary/40 rounded-full mt-1.5 shrink-0"></span>
+                        <span className="font-bold shrink-0">{reservationData.contact.tipo_documento}:</span>
+                        <span className="min-w-0 whitespace-nowrap">{reservationData.contact.numero_documento}</span>
+                      </p>
+                      <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-start gap-2 min-w-0">
+                        <span className="w-1 h-1 bg-brand-primary/40 rounded-full mt-1.5 shrink-0"></span>
+                        <span className="font-bold shrink-0">Tel:</span>
+                        <span className="min-w-0 whitespace-nowrap">{reservationData.contact.telefono_cliente}</span>
+                      </p>
+                      <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-start gap-2 sm:col-span-2 min-w-0">
+                        <span className="w-1 h-1 bg-brand-primary/40 rounded-full mt-1.5 shrink-0"></span>
+                        <span className="font-bold shrink-0">Email:</span>
+                        <span className="min-w-0 break-all">{reservationData.contact.correo_contacto}</span>
+                      </p>
+                    </div>
+
+                    <div className="flex gap-3 sm:gap-4 pt-3 mt-3 border-t border-brand-primary/5 flex-wrap">
+                      {calculateAge(reservationData.contact.fecha_nacimiento) !== null && (
+                        <p className="text-brand-text-secondary dark:text-dark-text-secondary text-[10px] flex items-center gap-1">
+                          <span className="w-1 h-1 rounded-full bg-brand-primary/30 shrink-0"></span>
+                          <span className="font-black text-brand-primary/50 mr-1 uppercase">{t('sections.age')}:</span>
+                          <span className="font-black text-brand-dark/80 dark:text-brand-primary/90">
+                            {calculateAge(reservationData.contact.fecha_nacimiento)} {t('sections.age_suffix')}
+                          </span>
                         </p>
-                        <p className="text-brand-text-secondary dark:text-dark-text-secondary text-sm flex items-start gap-2 min-w-0">
-                          <span className="w-1.5 h-1.5 bg-brand-primary rounded-full mt-2 shrink-0"></span>
-                          <span className="font-bold shrink-0">{t('welcome.phone_label').replace('*', '')}:</span>
-                          <span className="min-w-0 break-all">{reservationData.contact.telefono_cliente}</span>
+                      )}
+                      {reservationData.contact.nacionalidad && (
+                        <p className="text-brand-text-secondary dark:text-dark-text-secondary text-[10px] flex items-center gap-1">
+                          <span className="w-1 h-1 rounded-full bg-brand-primary/30 shrink-0"></span>
+                          <span className="font-black text-brand-primary/50 mr-1 uppercase">{t('sections.nationality')}:</span>
+                          <CountryFlagImg value={reservationData.contact.nacionalidad} size="w40" alt="" className="!w-4 !h-4 rounded-full" />
+                          <span className="font-black text-brand-dark/80 dark:text-brand-primary/90 ml-1">
+                            {getCountryName(reservationData.contact.nacionalidad)}
+                          </span>
                         </p>
-                      </div>
-                      <div className="space-y-2">
-                        <p className="text-brand-text-secondary dark:text-dark-text-secondary text-sm flex items-start gap-2 min-w-0">
-                          <span className="w-1.5 h-1.5 bg-brand-primary rounded-full mt-2 shrink-0"></span>
-                          <span className="font-bold shrink-0">{t('sections.email')}:</span>
-                          <span className="min-w-0 break-all">{reservationData.contact.correo_contacto}</span>
-                        </p>
-                        <div className="flex gap-3 sm:gap-4 pt-1 flex-wrap">
-                          {calculateAge(reservationData.contact.fecha_nacimiento) !== null && (
-                            <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-center gap-1">
-                              <span className="w-1.5 h-1.5 rounded-full bg-brand-primary/50 shrink-0"></span>
-                              <span className="font-black text-brand-primary/70 mr-1">{t('sections.age').toUpperCase()}:</span>
-                              <span className="font-black text-brand-dark dark:text-brand-primary">
-                                {calculateAge(reservationData.contact.fecha_nacimiento)} {t('sections.age_suffix')}
-                              </span>
-                            </p>
-                          )}
-                          {reservationData.contact.nacionalidad && (
-                            <p className="text-brand-text-secondary dark:text-dark-text-secondary text-xs flex items-center gap-1">
-                              <span className="w-1.5 h-1.5 rounded-full bg-brand-primary/50 shrink-0"></span>
-                              <span className="font-black text-brand-primary/70 mr-1">{t('sections.nationality').toUpperCase()}:</span>
-                              <CountryFlagImg value={reservationData.contact.nacionalidad} size="w40" alt="" className="!w-5 !h-5 rounded-full" />
-                              <span className="font-black text-brand-dark dark:text-brand-primary ml-1">
-                                {getCountryName(reservationData.contact.nacionalidad)}
-                              </span>
-                            </p>
-                          )}
-                        </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>
