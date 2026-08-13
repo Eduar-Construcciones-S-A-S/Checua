@@ -343,6 +343,8 @@ Este proyecto es de uso privado y todos los derechos están reservados. No se au
 
 **Naturaleza, aventura y experiencias que dejan huella.**
 
+Proyecto realizado por **Brayan Forigua**.
+
 Desarrollado con dedicación en Colombia 🇨🇴
 
 </div>
