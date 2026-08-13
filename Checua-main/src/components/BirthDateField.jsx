@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const parseDate = (value) => {
@@ -11,10 +11,6 @@ const BirthDateField = ({ value = '', onChange, hasError = false }) => {
   const { t, i18n } = useTranslation();
   const [parts, setParts] = useState(() => parseDate(value));
   const currentYear = new Date().getFullYear();
-
-  useEffect(() => {
-    setParts(parseDate(value));
-  }, [value]);
 
   const years = useMemo(
     () => Array.from({ length: 121 }, (_, index) => currentYear - index),
