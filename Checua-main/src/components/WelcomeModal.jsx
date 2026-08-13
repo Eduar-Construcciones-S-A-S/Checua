@@ -273,7 +273,7 @@ const WelcomeModal = ({ isOpen, onComplete, onClose, tours = [], loading = false
                   searchNotFound={t('welcome.search_not_found') || "..."}
                   placeholder={t('welcome.phone_placeholder')}
                   containerClass="!w-full !font-sans"
-                  inputClass="!w-full !h-auto !py-4 !pl-[70px] !pr-5 !bg-brand-light/30 dark:!bg-dark-bg-main/50 !border-2 !border-brand-border dark:!border-dark-border !rounded-full !text-brand-text-main dark:!text-dark-text-main !font-bold !text-base focus:!border-brand-primary focus:!ring-4 focus:!ring-brand-primary/5 !transition-all !duration-300"
+                  inputClass="!w-full !h-auto !py-4 !pl-[88px] !pr-5 !bg-brand-light/30 dark:!bg-dark-bg-main/50 !border-2 !border-brand-border dark:!border-dark-border !rounded-full !text-brand-text-main dark:!text-dark-text-main !font-bold !text-base focus:!border-brand-primary focus:!ring-4 focus:!ring-brand-primary/5 !transition-all !duration-300"
                   buttonClass="!bg-transparent !border-none !rounded-l-full !pl-4 hover:!bg-brand-primary/5 !transition-colors"
                   dropdownClass={`welcome-phone-dropdown ${phoneDropdownPosition === 'up' ? 'open-up' : ''}`}
                   searchClass="welcome-phone-search"
@@ -616,7 +616,11 @@ const WelcomeModal = ({ isOpen, onComplete, onClose, tours = [], loading = false
           color: #172033 !important;
         }
 
-        /* Icono de búsqueda simulado */
+        /* La librería ya dibuja la lupa; ocultamos su emoji y conservamos un solo icono visual. */
+        .react-tel-input .search-emoji {
+          display: none !important;
+        }
+
         .react-tel-input .search::before {
           content: "🔍";
           position: absolute;
@@ -626,6 +630,7 @@ const WelcomeModal = ({ isOpen, onComplete, onClose, tours = [], loading = false
           font-size: 14px;
           z-index: 11;
           opacity: 0.6;
+          pointer-events: none;
         }
 
         .dark .react-tel-input .search-box {
@@ -710,13 +715,13 @@ const WelcomeModal = ({ isOpen, onComplete, onClose, tours = [], loading = false
 
         /* Ajuste de la bandera seleccionada */
         .react-tel-input .selected-flag {
-          width: 60px !important;
+          width: 72px !important;
           padding-left: 15px !important;
           background: transparent !important;
         }
         
         .react-tel-input .selected-flag .arrow {
-          left: 39px !important;
+          left: 47px !important;
           border-top-color: #8CC915 !important;
         }
         
