@@ -6,50 +6,32 @@ const normalizePhone = (phone) => {
   return digits ? `+${digits}` : ''
 }
 
-const getCurrentReservationSelection = () => {
-  if (typeof window === 'undefined') return null
-  return window.__CHECUA_RESERVATION_DATA__ || null
-}
-
 const resolveDateId = async (planId, selectedDate) => {
   if (!planId || !selectedDate) return { id: null, error: null }
 
   const dateValue = String(selectedDate).slice(0, 10)
 
-  const { data: existingDate, error: lookupError } = await supabase
-    .from('plan_fechas')
-    .select('id_fecha')
-    .eq('id_plan', planId)
-    .eq('fecha', dateValue)
-    .maybeSingle()
-
-  if (lookupError) {
-    return { id: null, error: lookupError }
-  }
-
-  if (existingDate?.id_fecha) {
-    return { id: existingDate.id_fecha, error: null }
-  }
-
-  const { data: createdDate, error: createError } = await supabase
-    .from('plan_fechas')
-    .insert({
-      id_plan: planId,
-      fecha: dateValue
-    })
-    .select('id_fecha')
-    .single()
+  // La función SECURITY DEFINER de Supabase valida el plan y la fecha,
+  // devuelve el id_fecha existente o crea la relación si todavía no existe.
+  // Esto evita hacer INSERT directo desde el navegador y chocar con RLS.
+  const { data, error } = await supabase.rpc('get_or_create_plan_fecha', {
+    p_plan_id: Number(planId),
+    p_fecha: dateValue
+  })
 
   return {
-    id: createdDate?.id_fecha ?? null,
-    error: createError
+    id: data ?? null,
+    error
   }
 }
 
 const resolveHourId = async (planId, selectedTime) => {
   if (!planId || !selectedTime) return { id: null, error: null }
 
-  const timeValue = String(selectedTime)
+  // Postgres TIME normalmente se serializa como HH:mm:ss. Si el front
+  // conserva HH:mm, normalizamos antes de comparar.
+  const rawTime = String(selectedTime).trim()
+  const timeValue = /^\d{1,2}:\d{2}$/.test(rawTime) ? `${rawTime}:00` : rawTime
 
   const { data: existingHour, error } = await supabase
     .from('plan_horas')
@@ -67,9 +49,7 @@ const resolveHourId = async (planId, selectedTime) => {
 export const getReservationsByPhone = async (phone) => {
   try {
     const normalizedPhone = normalizePhone(phone)
-    if (!normalizedPhone) {
-      return { data: [], error: null }
-    }
+    if (!normalizedPhone) return { data: [], error: null }
 
     const { data, error } = await supabase
       .from('reserva')
@@ -86,18 +66,26 @@ export const getReservationsByPhone = async (phone) => {
 
 export const createReservation = async (reservation) => {
   try {
-    const currentSelection = getCurrentReservationSelection()
-    const selectedDate = reservation.fecha_reserva ?? currentSelection?.date?.fecha_reserva ?? null
-    const selectedTime = reservation.hora_reserva ?? currentSelection?.time?.hora_reserva ?? null
+    const selectedDate = reservation.fecha_reserva ?? null
+    const selectedTime = reservation.hora_reserva ?? null
+
+    if (!selectedDate) {
+      return { data: null, error: new Error('La reserva no contiene fecha_reserva') }
+    }
+
+    if (!selectedTime) {
+      return { data: null, error: new Error('La reserva no contiene hora_reserva') }
+    }
 
     const { id: idFecha, error: dateError } = await resolveDateId(
       reservation.id_plan,
       selectedDate
     )
 
-    if (dateError) {
-      console.error('Error al resolver la fecha de la reserva:', dateError)
-      return { data: null, error: dateError }
+    if (dateError || !idFecha) {
+      const error = dateError || new Error('No se pudo obtener id_fecha para la reserva')
+      console.error('Error al resolver la fecha de la reserva:', error)
+      return { data: null, error }
     }
 
     const { id: idHora, error: hourError } = await resolveHourId(
@@ -105,13 +93,14 @@ export const createReservation = async (reservation) => {
       selectedTime
     )
 
-    if (hourError) {
-      console.error('Error al resolver la hora de la reserva:', hourError)
-      return { data: null, error: hourError }
+    if (hourError || !idHora) {
+      const error = hourError || new Error('No se encontró id_hora para la hora seleccionada')
+      console.error('Error al resolver la hora de la reserva:', error)
+      return { data: null, error }
     }
 
     const payload = {
-      id_plan: reservation.id_plan,
+      id_plan: Number(reservation.id_plan),
       id_fecha: idFecha,
       id_hora: idHora,
       telefono_cliente: normalizePhone(reservation.telefono_cliente),
