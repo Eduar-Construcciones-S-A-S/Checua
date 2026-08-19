@@ -1,17 +1,28 @@
 import { supabase } from '../lib/supabase'
 
+const normalizePhone = (phone) => {
+  if (!phone) return ''
+  const digits = String(phone).replace(/\D/g, '')
+  return digits ? `+${digits}` : ''
+}
+
 /**
- * Busca un cliente por su número de teléfono
- * @param {string} phone Número de teléfono con indicativo
- * @returns {Promise<{data: any, error: any}>}
+ * Busca un cliente por su número de teléfono.
+ * Usa maybeSingle + limit(1) para tolerar duplicados históricos sin romper el flujo.
  */
 export const findClientByPhone = async (phone) => {
   try {
+    const normalizedPhone = normalizePhone(phone)
+    if (!normalizedPhone) {
+      return { data: null, error: null }
+    }
+
     const { data, error } = await supabase
       .from('cliente')
       .select('*')
-      .eq('telefono', phone)
-      .single()
+      .eq('telefono', normalizedPhone)
+      .limit(1)
+      .maybeSingle()
 
     return { data, error }
   } catch (err) {
@@ -20,17 +31,20 @@ export const findClientByPhone = async (phone) => {
 }
 
 /**
- * Crea un nuevo cliente en la base de datos
- * @param {string} phone Número de teléfono con indicativo
- * @returns {Promise<{data: any, error: any}>}
+ * Crea un nuevo cliente en la base de datos.
  */
 export const createClient = async (phone) => {
   try {
+    const normalizedPhone = normalizePhone(phone)
+    if (!normalizedPhone) {
+      return { data: null, error: new Error('Número de teléfono inválido') }
+    }
+
     const { data, error } = await supabase
       .from('cliente')
       .insert([
-        { 
-          telefono: phone,
+        {
+          telefono: normalizedPhone,
           atencion_humana: false,
           etapaconversacion: 'saludo'
         }
@@ -45,25 +59,35 @@ export const createClient = async (phone) => {
 }
 
 /**
- * Busca un cliente y si no existe lo crea (Lógica Atómica)
- * @param {string} phone Número de teléfono con indicativo
- * @returns {Promise<{data: any, status: 'found' | 'created' | 'error', error: any}>}
+ * Busca un cliente y solo lo crea si realmente no existe.
+ * Esta función debe ejecutarse al confirmar/continuar, nunca mientras se escribe el teléfono.
  */
 export const findOrCreateClient = async (phone) => {
-  // 1. Intentar buscar
-  const { data: existingClient, error: findError } = await findClientByPhone(phone)
+  const normalizedPhone = normalizePhone(phone)
+  if (!normalizedPhone) {
+    return { data: null, status: 'error', error: new Error('Número de teléfono inválido') }
+  }
+
+  const { data: existingClient, error: findError } = await findClientByPhone(normalizedPhone)
+
+  if (findError) {
+    return { data: null, status: 'error', error: findError }
+  }
 
   if (existingClient) {
     return { data: existingClient, status: 'found', error: null }
   }
 
-  // Si el error no es "PGRST116" (no se encontraron resultados), es un error real de conexión/permisos
-  if (findError && findError.code !== 'PGRST116') {
-    return { data: null, status: 'error', error: findError }
-  }
+  const { data: newClient, error: createError } = await createClient(normalizedPhone)
 
-  // 2. Si no existe, crear
-  const { data: newClient, error: createError } = await createClient(phone)
+  // Si en la base de datos existe una restricción UNIQUE y otra petición ganó la carrera,
+  // recuperamos el registro existente en lugar de crear/mostrar un error al usuario.
+  if (createError?.code === '23505') {
+    const { data: racedClient, error: racedError } = await findClientByPhone(normalizedPhone)
+    if (racedClient && !racedError) {
+      return { data: racedClient, status: 'found', error: null }
+    }
+  }
 
   if (createError) {
     return { data: null, status: 'error', error: createError }
@@ -73,19 +97,18 @@ export const findOrCreateClient = async (phone) => {
 }
 
 /**
- * Actualiza el plan seleccionado por un cliente
- * @param {string} phone Número de teléfono con indicativo
- * @param {string|number} planId ID del plan seleccionado
- * @returns {Promise<{data: any, error: any}>}
+ * Actualiza el plan seleccionado por un cliente.
  */
 export const updateClientPlan = async (phone, planId) => {
   try {
+    const normalizedPhone = normalizePhone(phone)
     const { data, error } = await supabase
       .from('cliente')
       .update({ id_plan: planId })
-      .eq('telefono', phone)
+      .eq('telefono', normalizedPhone)
       .select()
-      .single()
+      .limit(1)
+      .maybeSingle()
 
     return { data, error }
   } catch (err) {
