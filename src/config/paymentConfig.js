@@ -2,20 +2,20 @@ import { PAYMENT_ASSETS } from './paymentAssets';
 
 export const PAYMENT_CONFIG = {
   bancolombia: {
-    account_number: "000-000000-00", // PLACEHOLDER_BANCOLOMBIA
+    account_number: "108-859265-21 · Llave: 0089823116",
     type: "Ahorros",
     logo: PAYMENT_ASSETS.bancolombia
   },
   nequi: {
-    number: "3000000000", // PLACEHOLDER_NEQUI
+    number: "310 374 1536",
     logo: PAYMENT_ASSETS.nequi
   },
   breb: {
-    key: "adrenaline@breb.com", // PLACEHOLDER_BREB
-    logo: PAYMENT_ASSETS.breb
+    key: "310 374 1536",
+    logo: PAYMENT_ASSETS.daviplata
   },
   beneficiary: {
-    name: "Desierto de Checua"
+    name: "Bancolombia: Carlos Humberto Parra Franco · Nequi/Daviplata: Orlando Acosta"
   },
   whatsapp: {
     official_number: "573015119344",
