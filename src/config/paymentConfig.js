@@ -2,7 +2,8 @@ import { PAYMENT_ASSETS } from './paymentAssets';
 
 export const PAYMENT_CONFIG = {
   bancolombia: {
-    account_number: "108-859265-21 · Llave: 0089823116",
+    account_number: "108-859265-21",
+    key: "0089823116",
     type: "Ahorros",
     logo: PAYMENT_ASSETS.bancolombia
   },
