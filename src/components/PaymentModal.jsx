@@ -21,173 +21,164 @@ const PaymentModal = ({ isOpen, onClose, experience, participants, totalAmount, 
     window.open(`https://wa.me/${PAYMENT_CONFIG.whatsapp.official_number}?text=${message}`, '_blank');
   };
 
+  const CopyButton = ({ value, field, label }) => (
+    <button
+      type="button"
+      onClick={() => handleCopy(value, field)}
+      className="w-full sm:w-auto px-4 py-2.5 bg-brand-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:scale-[1.02] active:scale-95 transition-transform shrink-0"
+    >
+      {copiedField === field ? t('summary.payment.copied') : label}
+    </button>
+  );
+
+  const PaymentRow = ({ label, value, field, copyLabel }) => (
+    <div className="rounded-2xl bg-brand-light/20 dark:bg-dark-bg-main/25 border border-brand-primary/10 p-4 sm:p-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-5">
+        <div className="min-w-0">
+          <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.16em] text-brand-text-secondary dark:text-dark-text-secondary mb-1.5">
+            {label}
+          </p>
+          <p className="font-mono font-black text-sm sm:text-base text-brand-text-main dark:text-dark-text-main break-all leading-relaxed">
+            {value}
+          </p>
+        </div>
+        <CopyButton value={value} field={field} label={copyLabel} />
+      </div>
+    </div>
+  );
+
   return (
-    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-brand-dark/40 dark:bg-black/60 backdrop-blur-md animate-in fade-in duration-300 overflow-y-auto">
-      <div className="w-full max-w-lg bg-white dark:bg-dark-bg-card rounded-[2.5rem] shadow-2xl relative border border-brand-border dark:border-dark-border animate-in zoom-in-95 duration-300 my-auto">
-        {/* Header Accent */}
-        <div className="h-2 w-full bg-brand-primary rounded-t-[2.5rem] shrink-0"></div>
-        
-        {/* Close Button */}
-        <button 
+    <div className="fixed inset-0 z-[1000] flex items-start sm:items-center justify-center bg-brand-dark/40 dark:bg-black/60 backdrop-blur-md animate-in fade-in duration-300 overflow-y-auto p-2 sm:p-5">
+      <div className="w-full max-w-2xl bg-white dark:bg-dark-bg-card rounded-[1.75rem] sm:rounded-[2.5rem] shadow-2xl relative border border-brand-border dark:border-dark-border animate-in zoom-in-95 duration-300 my-2 sm:my-6 overflow-hidden">
+        <div className="h-2 w-full bg-brand-primary shrink-0"></div>
+
+        <button
+          type="button"
           onClick={onClose}
-          className="absolute top-6 right-6 w-11 h-11 flex items-center justify-center text-brand-text-secondary dark:text-dark-text-secondary hover:text-red-500 dark:hover:text-red-400 transition-all duration-300 hover:scale-110 active:scale-95 z-10"
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center text-brand-text-secondary dark:text-dark-text-secondary hover:text-red-500 dark:hover:text-red-400 transition-all duration-300 hover:scale-110 active:scale-95 z-10"
         >
-          <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+          <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <div className="px-6 pt-16 pb-8 md:px-10 md:pb-10 space-y-6">
-          <div className="text-center space-y-2">
-            <h2 className="text-2xl md:text-3xl font-black text-brand-text-main dark:text-dark-text-main uppercase tracking-tight">
+        <div className="px-4 sm:px-7 md:px-10 pt-14 sm:pt-16 pb-6 sm:pb-10 space-y-5 sm:space-y-7">
+          <div className="text-center px-8 sm:px-12">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-brand-text-main dark:text-dark-text-main uppercase tracking-tight leading-tight">
               {t('summary.payment.title')}
             </h2>
           </div>
 
-          {/* Resumen Rápido */}
-          <div className="bg-brand-light/30 dark:bg-dark-bg-main/30 rounded-[2rem] p-5 border border-brand-primary/10 space-y-2">
-            <p className="text-xs font-black text-brand-primary uppercase tracking-widest opacity-60">
-              {t('summary.payment.experience')}
-            </p>
-            <p className="text-brand-text-main dark:text-dark-text-main font-black text-base md:text-lg leading-tight break-words whitespace-normal">
-              {experience}
-            </p>
-            <div className="pt-3 border-t border-brand-primary/10 space-y-3">
-              <p className="text-[10px] font-bold text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-widest">
+          <div className="bg-brand-light/30 dark:bg-dark-bg-main/30 rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-6 border border-brand-primary/10 space-y-4">
+            <div>
+              <p className="text-[10px] sm:text-xs font-black text-brand-primary uppercase tracking-widest opacity-70 mb-1">
+                {t('summary.payment.experience')}
+              </p>
+              <p className="text-brand-text-main dark:text-dark-text-main font-black text-base sm:text-lg leading-snug break-words">
+                {experience}
+              </p>
+            </div>
+
+            <div className="pt-3 border-t border-brand-primary/10">
+              <p className="text-[10px] font-bold text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-widest mb-3">
                 {t('summary.payment.participants')}: <span className="text-brand-text-main dark:text-dark-text-main">{participants}</span>
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="rounded-2xl border border-brand-primary/15 bg-white/50 dark:bg-dark-bg-card/40 p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="rounded-2xl border border-brand-primary/15 bg-white/50 dark:bg-dark-bg-card/40 p-4 sm:p-5">
                   <p className="text-[9px] font-black text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-wider">
                     Valor total de la reserva
                   </p>
-                  <p className="mt-1 text-lg md:text-xl font-black text-brand-text-main dark:text-dark-text-main whitespace-nowrap">
+                  <p className="mt-2 text-lg sm:text-xl font-black text-brand-text-main dark:text-dark-text-main break-words">
                     {formatCurrency(totalAmount)} COP
                   </p>
                 </div>
 
-                <div className="rounded-2xl border-2 border-brand-primary/40 bg-brand-primary/10 p-4 shadow-[0_10px_25px_-18px_rgba(140,201,21,0.9)]">
+                <div className="rounded-2xl border-2 border-brand-primary/40 bg-brand-primary/10 p-4 sm:p-5 shadow-[0_10px_25px_-18px_rgba(140,201,21,0.9)]">
                   <p className="text-[9px] font-black text-brand-primary uppercase tracking-wider">
                     Abono para confirmar (30 %)
                   </p>
-                  <p className="mt-1 text-xl md:text-2xl font-black text-brand-primary whitespace-nowrap">
+                  <p className="mt-2 text-xl sm:text-2xl font-black text-brand-primary break-words">
                     {formatCurrency(depositAmount)} COP
                   </p>
                 </div>
               </div>
 
-              <p className="text-[10px] font-bold text-brand-text-secondary dark:text-dark-text-secondary text-center">
+              <p className="mt-3 text-[10px] font-bold text-brand-text-secondary dark:text-dark-text-secondary text-center leading-relaxed">
                 Paga el abono mínimo para confirmar tu cupo.
               </p>
             </div>
           </div>
 
-          {/* Métodos de Pago */}
-          <div className="space-y-4">
-            {/* Bancolombia */}
-            <div className="p-4 bg-white dark:bg-dark-bg-card border-2 border-brand-border dark:border-dark-border rounded-3xl space-y-3">
+          <div className="space-y-4 sm:space-y-5">
+            <div className="p-4 sm:p-6 bg-white dark:bg-dark-bg-card border-2 border-brand-border dark:border-dark-border rounded-[1.5rem] sm:rounded-3xl space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white dark:bg-dark-bg-card rounded-xl flex items-center justify-center p-1 overflow-hidden border border-brand-border dark:border-dark-border">
-                  <img 
-                    src={PAYMENT_CONFIG.bancolombia.logo} 
-                    alt="Bancolombia" 
-                    className="w-full h-full object-contain"
-                    loading="lazy"
-                  />
+                <div className="w-10 h-10 sm:w-11 sm:h-11 bg-white dark:bg-dark-bg-card rounded-xl flex items-center justify-center p-1 overflow-hidden border border-brand-border dark:border-dark-border shrink-0">
+                  <img src={PAYMENT_CONFIG.bancolombia.logo} alt="Bancolombia" className="w-full h-full object-contain" loading="lazy" />
                 </div>
-                <h3 className="font-black text-brand-text-main dark:text-dark-text-main uppercase text-sm tracking-wider">
-                  {t('summary.payment.bancolombia_title')}
-                </h3>
+                <div className="min-w-0">
+                  <h3 className="font-black text-brand-text-main dark:text-dark-text-main uppercase text-sm sm:text-base tracking-wider leading-tight">
+                    Bancolombia
+                  </h3>
+                  <p className="text-[9px] sm:text-[10px] font-bold text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-wider mt-1">
+                    Carlos Humberto Parra Franco
+                  </p>
+                </div>
               </div>
-              <div className="flex items-center justify-between gap-3 bg-brand-light/20 dark:bg-dark-bg-main/20 p-3 rounded-2xl min-w-0">
-                <span className="font-mono font-bold text-brand-text-main dark:text-dark-text-main min-w-0 break-all">
-                  {PAYMENT_CONFIG.bancolombia.account_number}
-                </span>
-                <button 
-                  onClick={() => handleCopy(PAYMENT_CONFIG.bancolombia.account_number, 'bc')}
-                  className="px-4 py-2 bg-brand-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:scale-105 transition-transform shrink-0"
-                >
-                  {copiedField === 'bc' ? t('summary.payment.copied') : t('summary.payment.copy_number')}
-                </button>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                <PaymentRow
+                  label="Cuenta de ahorros"
+                  value={PAYMENT_CONFIG.bancolombia.account_number}
+                  field="bc-account"
+                  copyLabel="Copiar cuenta"
+                />
+                <PaymentRow
+                  label="Llave Bancolombia"
+                  value={PAYMENT_CONFIG.bancolombia.key}
+                  field="bc-key"
+                  copyLabel="Copiar llave"
+                />
               </div>
             </div>
 
-            {/* Nequi */}
-            <div className="p-4 bg-white dark:bg-dark-bg-card border-2 border-brand-border dark:border-dark-border rounded-3xl space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white dark:bg-dark-bg-card rounded-xl flex items-center justify-center p-1 overflow-hidden border border-brand-border dark:border-dark-border">
-                  <img 
-                    src={PAYMENT_CONFIG.nequi.logo} 
-                    alt="Nequi" 
-                    className="w-full h-full object-contain"
-                    loading="lazy"
-                  />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+              <div className="p-4 sm:p-5 bg-white dark:bg-dark-bg-card border-2 border-brand-border dark:border-dark-border rounded-[1.5rem] sm:rounded-3xl space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white dark:bg-dark-bg-card rounded-xl flex items-center justify-center p-1 overflow-hidden border border-brand-border dark:border-dark-border shrink-0">
+                    <img src={PAYMENT_CONFIG.nequi.logo} alt="Nequi" className="w-full h-full object-contain" loading="lazy" />
+                  </div>
+                  <div>
+                    <h3 className="font-black text-brand-text-main dark:text-dark-text-main uppercase text-sm tracking-wider">Nequi</h3>
+                    <p className="text-[9px] font-bold text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-wider mt-1">Orlando Acosta</p>
+                  </div>
                 </div>
-                <h3 className="font-black text-brand-text-main dark:text-dark-text-main uppercase text-sm tracking-wider">
-                  {t('summary.payment.nequi_title')}
-                </h3>
+                <PaymentRow label="Número Nequi" value={PAYMENT_CONFIG.nequi.number} field="nq" copyLabel="Copiar número" />
               </div>
-              <div className="flex items-center justify-between gap-3 bg-brand-light/20 dark:bg-dark-bg-main/20 p-3 rounded-2xl min-w-0">
-                <span className="font-mono font-bold text-brand-text-main dark:text-dark-text-main min-w-0 break-all">
-                  {PAYMENT_CONFIG.nequi.number}
-                </span>
-                <button 
-                  onClick={() => handleCopy(PAYMENT_CONFIG.nequi.number, 'nq')}
-                  className="px-4 py-2 bg-brand-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:scale-105 transition-transform shrink-0"
-                >
-                  {copiedField === 'nq' ? t('summary.payment.copied') : t('summary.payment.copy_number')}
-                </button>
-              </div>
-            </div>
 
-            {/* Bre-B */}
-            <div className="p-4 bg-white dark:bg-dark-bg-card border-2 border-brand-border dark:border-dark-border rounded-3xl space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white dark:bg-dark-bg-card rounded-xl flex items-center justify-center p-1 overflow-hidden border border-brand-border dark:border-dark-border">
-                  <img 
-                    src={PAYMENT_CONFIG.breb.logo} 
-                    alt="Bre-B" 
-                    className="w-full h-full object-contain"
-                    loading="lazy"
-                  />
+              <div className="p-4 sm:p-5 bg-white dark:bg-dark-bg-card border-2 border-brand-border dark:border-dark-border rounded-[1.5rem] sm:rounded-3xl space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white dark:bg-dark-bg-card rounded-xl flex items-center justify-center p-1 overflow-hidden border border-brand-border dark:border-dark-border shrink-0">
+                    <img src={PAYMENT_CONFIG.breb.logo} alt="Daviplata" className="w-full h-full object-contain" loading="lazy" />
+                  </div>
+                  <div>
+                    <h3 className="font-black text-brand-text-main dark:text-dark-text-main uppercase text-sm tracking-wider">Daviplata</h3>
+                    <p className="text-[9px] font-bold text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-wider mt-1">Orlando Acosta</p>
+                  </div>
                 </div>
-                <h3 className="font-black text-brand-text-main dark:text-dark-text-main uppercase text-sm tracking-wider">
-                  {t('summary.payment.breb_title')}
-                </h3>
-              </div>
-              <div className="flex items-center justify-between gap-3 bg-brand-light/20 dark:bg-dark-bg-main/20 p-3 rounded-2xl min-w-0">
-                <span className="font-mono font-bold text-brand-text-main dark:text-dark-text-main min-w-0 break-all">
-                  {PAYMENT_CONFIG.breb.key}
-                </span>
-                <button 
-                  onClick={() => handleCopy(PAYMENT_CONFIG.breb.key, 'breb')}
-                  className="px-4 py-2 bg-brand-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:scale-105 transition-transform shrink-0"
-                >
-                  {copiedField === 'breb' ? t('summary.payment.copied') : t('summary.payment.copy_key')}
-                </button>
+                <PaymentRow label="Número Daviplata" value={PAYMENT_CONFIG.breb.key} field="daviplata" copyLabel="Copiar número" />
               </div>
             </div>
           </div>
 
-          {/* Beneficiario */}
-          <div className="text-center space-y-1">
-            <p className="text-[10px] font-bold text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-widest">
-              {t('summary.payment.beneficiary_hint')}
-            </p>
-            <p className="text-lg font-black text-brand-primary uppercase">
-              {PAYMENT_CONFIG.beneficiary.name}
-            </p>
-          </div>
-
-          {/* Instrucción WhatsApp */}
-          <div className="bg-brand-primary/5 border border-brand-primary/20 rounded-[2rem] p-5 space-y-4">
+          <div className="bg-brand-primary/5 border border-brand-primary/20 rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-6 space-y-4">
             <p className="text-xs font-bold text-brand-dark dark:text-brand-primary text-center leading-relaxed">
               {t('summary.payment.whatsapp_instruction')}
             </p>
             <button
+              type="button"
               onClick={handleWhatsApp}
-              className="w-full px-5 py-4 bg-[#25D366] text-white font-black text-xs uppercase tracking-widest rounded-full shadow-lg hover:scale-[1.02] active:scale-95 transition-all"
+              className="w-full px-5 py-4 bg-[#25D366] text-white font-black text-xs uppercase tracking-widest rounded-full shadow-lg hover:scale-[1.01] active:scale-95 transition-all"
             >
               <span className="mx-auto inline-flex max-w-full items-center justify-center gap-2.5">
                 <svg className="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
