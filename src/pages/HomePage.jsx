@@ -75,6 +75,8 @@ const HomePage = ({
 
       const reservationPayload = {
         id_plan: reservationData.tour.id_plan,
+        fecha_reserva: reservationData.date.fecha_reserva,
+        hora_reserva: reservationData.time.hora_reserva,
         telefono_cliente: reservationData.contact.telefono_cliente,
         cantidad_personas: totalParticipants,
         aprobado: false,
