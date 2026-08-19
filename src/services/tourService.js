@@ -61,7 +61,7 @@ export const getPlanHours = async (planId) => {
   try {
     const { data, error } = await supabase
       .from('plan_horas')
-      .select('hora')
+      .select('id_hora, hora')
       .eq('id_plan', planId);
 
     if (error) throw error;
