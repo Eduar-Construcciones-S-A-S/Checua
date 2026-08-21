@@ -2,13 +2,34 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PAYMENT_CONFIG } from '../config/paymentConfig';
 
-const PaymentModal = ({ isOpen, onClose, experience, participants, totalAmount, formatCurrency }) => {
-  const { t } = useTranslation();
+const PaymentModal = ({
+  isOpen,
+  onClose,
+  experience,
+  participants,
+  totalAmount,
+  formatCurrency,
+  subjectToAdvisor = false
+}) => {
+  const { t, i18n } = useTranslation();
   const [copiedField, setCopiedField] = useState(null);
 
   if (!isOpen) return null;
 
   const depositAmount = Math.round(totalAmount * 0.3);
+  const isEnglish = i18n.language?.startsWith('en');
+
+  const advisorPriceTitle = isEnglish
+    ? 'Price defined with your advisor'
+    : 'Precio definido con tu asesor';
+
+  const advisorPriceText = isEnglish
+    ? 'For this weekday date, the price is subject to the conditions previously agreed with the advisor. No automatic total, deposit or remaining balance is shown.'
+    : 'Para esta fecha entre semana, el precio está sujeto a las condiciones previamente definidas con el asesor. No se muestra un total, abono ni saldo automático.';
+
+  const advisorPaymentInstruction = isEnglish
+    ? 'Send the payment receipt for the amount or remaining balance indicated or agreed with your advisor so we can validate your reservation.'
+    : 'Envía el comprobante de pago del valor o saldo que nuestro asesor te haya indicado o que hayas pactado para validar tu reserva.';
 
   const handleCopy = (text, field) => {
     navigator.clipboard.writeText(text);
@@ -17,7 +38,13 @@ const PaymentModal = ({ isOpen, onClose, experience, participants, totalAmount, 
   };
 
   const handleWhatsApp = () => {
-    const message = encodeURIComponent(t('summary.payment.whatsapp_message'));
+    const defaultMessage = subjectToAdvisor
+      ? (isEnglish
+          ? 'Hello, I am sending the payment receipt for the amount agreed with the advisor for my Desierto de Checua reservation.'
+          : 'Hola, envío el comprobante de pago del valor acordado con el asesor para mi reserva en el Desierto de Checua.')
+      : t('summary.payment.whatsapp_message');
+
+    const message = encodeURIComponent(defaultMessage);
     window.open(`https://wa.me/${PAYMENT_CONFIG.whatsapp.official_number}?text=${message}`, '_blank');
   };
 
@@ -84,29 +111,45 @@ const PaymentModal = ({ isOpen, onClose, experience, participants, totalAmount, 
                 {t('summary.payment.participants')}: <span className="text-brand-text-main dark:text-dark-text-main">{participants}</span>
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                <div className="rounded-2xl border border-brand-primary/15 bg-white/50 dark:bg-dark-bg-card/40 p-4 sm:p-5">
-                  <p className="text-[9px] font-black text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-wider">
-                    Valor total de la reserva
+              {subjectToAdvisor ? (
+                <div className="rounded-[1.25rem] sm:rounded-[1.5rem] border-2 border-amber-400/35 bg-amber-400/10 p-4 sm:p-6 text-center">
+                  <div className="mx-auto mb-3 w-10 h-10 rounded-full bg-amber-400/15 flex items-center justify-center text-xl" aria-hidden="true">
+                    ⚠️
+                  </div>
+                  <p className="text-[10px] sm:text-xs font-black text-amber-600 dark:text-amber-300 uppercase tracking-[0.16em]">
+                    {advisorPriceTitle}
                   </p>
-                  <p className="mt-2 text-lg sm:text-xl font-black text-brand-text-main dark:text-dark-text-main break-words">
-                    {formatCurrency(totalAmount)} COP
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border-2 border-brand-primary/40 bg-brand-primary/10 p-4 sm:p-5 shadow-[0_10px_25px_-18px_rgba(140,201,21,0.9)]">
-                  <p className="text-[9px] font-black text-brand-primary uppercase tracking-wider">
-                    Abono para confirmar (30 %)
-                  </p>
-                  <p className="mt-2 text-xl sm:text-2xl font-black text-brand-primary break-words">
-                    {formatCurrency(depositAmount)} COP
+                  <p className="mt-3 text-sm sm:text-base font-bold text-brand-text-main dark:text-dark-text-main leading-relaxed">
+                    {advisorPriceText}
                   </p>
                 </div>
-              </div>
+              ) : (
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <div className="rounded-2xl border border-brand-primary/15 bg-white/50 dark:bg-dark-bg-card/40 p-4 sm:p-5">
+                      <p className="text-[9px] font-black text-brand-text-secondary dark:text-dark-text-secondary uppercase tracking-wider">
+                        Valor total de la reserva
+                      </p>
+                      <p className="mt-2 text-lg sm:text-xl font-black text-brand-text-main dark:text-dark-text-main break-words">
+                        {formatCurrency(totalAmount)} COP
+                      </p>
+                    </div>
 
-              <p className="mt-3 text-[10px] font-bold text-brand-text-secondary dark:text-dark-text-secondary text-center leading-relaxed">
-                Paga el abono mínimo para confirmar tu cupo.
-              </p>
+                    <div className="rounded-2xl border-2 border-brand-primary/40 bg-brand-primary/10 p-4 sm:p-5 shadow-[0_10px_25px_-18px_rgba(140,201,21,0.9)]">
+                      <p className="text-[9px] font-black text-brand-primary uppercase tracking-wider">
+                        Abono para confirmar (30 %)
+                      </p>
+                      <p className="mt-2 text-xl sm:text-2xl font-black text-brand-primary break-words">
+                        {formatCurrency(depositAmount)} COP
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className="mt-3 text-[10px] font-bold text-brand-text-secondary dark:text-dark-text-secondary text-center leading-relaxed">
+                    Paga el abono mínimo para confirmar tu cupo.
+                  </p>
+                </>
+              )}
             </div>
           </div>
 
@@ -173,7 +216,7 @@ const PaymentModal = ({ isOpen, onClose, experience, participants, totalAmount, 
 
           <div className="bg-brand-primary/5 border border-brand-primary/20 rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-6 space-y-4">
             <p className="text-xs font-bold text-brand-dark dark:text-brand-primary text-center leading-relaxed">
-              {t('summary.payment.whatsapp_instruction')}
+              {subjectToAdvisor ? advisorPaymentInstruction : t('summary.payment.whatsapp_instruction')}
             </p>
             <button
               type="button"
